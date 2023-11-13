@@ -1,0 +1,18 @@
+#Kafka
+version: '3'
+kafka:
+  addr: '192.168.0.35'
+  port: '9092'
+  source_topic: 'dataSensor'
+  transformed_topic: 'dataTransformed'
+
+#Minio
+minio:
+  addr: '192.168.0.36'
+  port: '9000'    
+  bucket: 'bronze'
+
+#Others
+url: 'https://thingspeak.com/channels/1052510/feed/last.json'
+raw_dir: 'raw_data/'
+schedule_time: 60
