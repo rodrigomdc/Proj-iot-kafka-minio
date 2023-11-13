@@ -1,4 +1,4 @@
-# ETL de Dados de Plataforma IoT com Processamento em Tempo Real
+# Ambiente local para ETL de Dados de Plataforma IoT com Processamento em Tempo Real
 
 ###  Apresentação
 
@@ -14,6 +14,8 @@ Neste projeto, buscou-se aplicar um processo de ETL básico com processamento em
 
 - Python v3.10.12
 - Apache Spark v3.5.0
+- Kafka v3.5.1
+- Minio RELEASE.2023-10-16T04-13-43Z
 - VirtualBox v7.0
 - Docker v24.0.2
 - jets3t-0.9.4.jar
@@ -26,7 +28,7 @@ Neste projeto, buscou-se aplicar um processo de ETL básico com processamento em
 
 ### Etapas
 
-A construção do projeto proposto ocorreu em 4 etapas.
+A construção do projeto proposto ocorreu em 5 etapas:
 
 1. Construção de um ambiente local
 2. Implantação do serviço de storage local de objetos
@@ -36,18 +38,18 @@ A construção do projeto proposto ocorreu em 4 etapas.
 
 #### 1. Construção de uma infraestrutura local
 
-Visando o reforço nos conhecimentos de Sistema Operacional Linux, Redes de Computadores e Virtualização, criou-se uma infraestrutura local com o uso de duas máquinas virtuais criadas no VirtualBox. 
+Visando o reforço nos conhecimentos de Sistema Operacional Linux, Redes de Computadores e Virtualização, criou-se uma infraestrutura local com o uso de duas máquinas virtuais com o uso do VirtualBox. 
 
 Uma máquina virtual atua como serviço de storage de objetos MinIO e outra como serviço de streaming de dados com o Kafka.
 
-Ambas possuem as seguintes configurações:
+Configuração das máquians virtuais:
 
 * SO: Ubuntu Minimal 18.08 configurado como servidor básico
 * RAM: 2 GB
 * HD: 30 GB
 * Interface de Rede: modo bridge
 
-Já a máquina hospedeira apresenta a seguinte configuração:
+Configuração da máquina hospedeira:
 
 * SO: Linux Mint v21.1
 * CPU: Core i7 8 núcleos
@@ -67,7 +69,7 @@ Um arquivo *docker-compose-files/docker-compose<minio>.yml* foi usado para provi
 
 #### 3. Implantação do serviço de storage de dados em streaming
 
-O [Kafka](https://kafka.apache.org/) foi a plataforma escolhida para armazenar os dados em tempo real cdos dados presentes na plataforma ThingSpeak. 
+O [Kafka](https://kafka.apache.org/) foi a plataforma escolhida para armazenar os dados em tempo real dos dados obtidos da plataforma ThingSpeak. 
 
 Assim como o Minio, ele também foi implantado como um container docker em uma máquina virtual. 
 
@@ -86,11 +88,11 @@ Cada leitura gera um arquivo JSON que é armazenado no bucket Bronze. A figura a
 
 #### 4. Aquisição e Ingestão de dados da plataforma IoT no Minio e Kafka
 
-Esta etapa ocorre pela execução do script **dataingestion.py** sendo ele executado localmete na máquina hospedeira das máquinas virtuais. 
+Esta etapa ocorre pela execução do script **dataingestion.py** sendo ele executado localmente na máquina hospedeira das máquinas virtuais. 
 
 Como fonte de dados, escolheu-se dados de natureza em tempo real obtidos de uma aplicação de IoT hospedada na plataforma ThingSpeak. Nela, as aplicações são definidas como canais (Channels) que podem ser privados ou públicos. 
 
-Escolheu-se o [Channel ID: 1052510](https://thingspeak.com/channels/1052510) por representar dados coletados de uma estação meteorológica particular instalada na cidade de Belém-PA. É necessário realizar um cadastro simples na plataforma para poder acessar o URL de cada um dos dados dos sensores presentes no channel correspondente. Escolheu-se manipular dados referentes a:
+Escolheu-se o [Channel ID: 1052510](https://thingspeak.com/channels/1052510) por representar dados coletados de uma estação meteorológica particular instalada na cidade de Belém-PA. Escolheu-se manipular dados referentes a:
 
 * Timestamp
 * Umidade relativa do ar (%rH)
@@ -110,20 +112,20 @@ O arquivo *config/params.yml* determina os principais parâmetros necessários p
 A figura abaixo apresenta a execução do script de aquisição e ingestão de dados.
 
 <p align="left">
-    <img src="img/dt_ing.png" height="250">
+    <img src="img/dt_ing.png" height="270">
 </p>
 
 Já a figura abaixo apresenta os dados já publicados no tópico *dataSensor*.
 
 <p align="left">
-    <img src="img/tp_sensor.png" height="250">
+    <img src="img/tp_sensor.png" height="150">
 </p>
 
 **Observação:** Os dados coletados da aplicação no ThingSpeak dependem da disponibilidade  por parte do proprietário que pode tornar indisponível o acesso a aplicação por motivos próprios ou não. 
 
 #### 4. Processamento dos dados em streaming
 
-Esta etapa ocorre pela execução do script **dataprocessing.py** sendo ele executado localmete na máquina hospedeira das máquinas virtuais. Além disso, ele é executado em conjunto com o script **dataingestion.py**.
+Esta etapa ocorre pela execução do script **dataprocessing.py** sendo ele executado localmente na máquina hospedeira das máquinas virtuais. Além disso, ele é executado em conjunto com o script **dataingestion.py**.
 
 Os dados brutos publicados como mensagens no tópico dataSensor são consumidos neste mésmo tópico pelo Apache Spark e então passam por algumas transformações:
 
@@ -134,18 +136,18 @@ Os dados brutos publicados como mensagens no tópico dataSensor são consumidos 
 * Alteração do mês em formato de número para o formato de caractere.
 * Transformação do formato do dataframe.
 
-Após isto, eles são públicados no Kafka como mensagens no tópico *dataTransformed*. Assim, é possível termos aplicações que podem usar essas informações para gerar possíveis alertas relacionados a umidade relativa do ar ou alta/baixa temperatura do ambiente.
+Após isto, eles são públicados no Kafka como mensagens no tópico *dataTransformed*. Assim, as aplicações podem usar essas informações para gerar possíveis alertas relacionados a umidade relativa do ar ou alta/baixa temperatura do ambiente.
 
 A figura abaixo apresenta a execução do script de processamento dos dados em streaming.
 
 <p align="left">
-    <img src="img/dt_str.png" height="250">
+    <img src="img/dt_str.png" height="270">
 </p>
 
 Já a figura abaixo apresenta os dados já transformados e publicados no tópico *dataTransformed*.
 
 <p align="left">
-    <img src="img/tp_transf.png" height="250">
+    <img src="img/tp_transf.png" height="150">
 </p>
 
 
@@ -156,6 +158,7 @@ Este projeto teve como objetivo reforçar diversos conceitos bem como ter contat
 * Apache AirFlow*
 * Apache Kafka
 * Possibilidade de persistir os dados transformados no bucket silver
+* Kubernetes
 * ...
 
 
