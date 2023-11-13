@@ -1,4 +1,4 @@
-# Ambiente local para ETL de Dados de Plataforma IoT com Processamento em Tempo Real
+# Ambiente local para ETL de dados de plataforma IoT com processamento em tempo real
 
 ###  Apresentação
 
