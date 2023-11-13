@@ -81,7 +81,7 @@ Um arquivo *docker-compose-files/docker-compose<kafka>.yml* foi usado para provi
 Cada leitura gera um arquivo JSON que é armazenado no bucket Bronze. A figura abaixo apresenta uma amostra do conteúdo presente neste bucket. 
 
 <p align="left">
-    <img src="img/amostra_bucket.png" height="200">
+    <img src="img/minio_bucket.png" height="200">
 </p>
 
 #### 4. Aquisição e Ingestão de dados da plataforma IoT no Minio e Kafka
@@ -110,7 +110,13 @@ O arquivo *config/params.yml* determina os principais parâmetros necessários p
 A figura abaixo apresenta a execução do script de aquisição e ingestão de dados.
 
 <p align="left">
-    <img src="img/dt_ing.png" height="150">
+    <img src="img/dt_ing.png" height="250">
+</p>
+
+Já a figura abaixo apresenta os dados já publicados no tópico *dataSensor*.
+
+<p align="left">
+    <img src="img/tp_sensor.png" height="250">
 </p>
 
 **Observação:** Os dados coletados da aplicação no ThingSpeak dependem da disponibilidade  por parte do proprietário que pode tornar indisponível o acesso a aplicação por motivos próprios ou não. 
@@ -133,8 +139,15 @@ Após isto, eles são públicados no Kafka como mensagens no tópico *dataTransf
 A figura abaixo apresenta a execução do script de processamento dos dados em streaming.
 
 <p align="left">
-    <img src="img/dt_str.png" height="150">
+    <img src="img/dt_str.png" height="250">
 </p>
+
+Já a figura abaixo apresenta os dados já transformados e publicados no tópico *dataTransformed*.
+
+<p align="left">
+    <img src="img/tp_transf.png" height="250">
+</p>
+
 
 ### Conclusão
 
