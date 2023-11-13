@@ -36,7 +36,7 @@ A construção do projeto proposto ocorreu em 5 etapas:
 4. Aquisição e Ingestão de dados da plataforma IoT no Minio e Kafka
 5. Processamento dos dados em streaming
 
-#### 1. Construção de uma infraestrutura local
+#### 1. Construção de um ambiente local
 
 Visando o reforço nos conhecimentos de Sistema Operacional Linux, Redes de Computadores e Virtualização, criou-se uma infraestrutura local com o uso de duas máquinas virtuais com o uso do VirtualBox. 
 
