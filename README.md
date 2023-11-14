@@ -1,4 +1,4 @@
-# Pipeline de dados com o processamento de dados IoT em streaming
+# Pipeline de dados com o processamento de dados em streaming de uma fonte de IoT
 
 ###  Apresentação
 
@@ -64,7 +64,7 @@ Ele foi implantado em uma das máquinas virtuais como um container Docker e poss
 
 * Bronze
 
-Um arquivo *docker-compose-files/docker-compose<minio>.yml* foi usado para provisionar o container com o Minio.
+Um arquivo *docker-compose-files/docker-compose-minio.yml* foi usado para provisionar o container com o Minio.
 
 #### 3. Implantação do serviço de storage de dados em streaming
 
@@ -77,7 +77,14 @@ Criou-se 2 tópicos no Kafka:
 * **dataSensor:** Tópico usado para publicar no Kafka os dados coletados da plataforma.
 * **dataTransformed:** Tópico usado para públicar no Kafka os dados que foram processados pelo Apache Spark.
 
-Um arquivo *docker-compose-files/docker-compose<kafka>.yml* foi usado para provisionar o container com o Kafka.
+Um arquivo *docker-compose-files/docker-compose-kafka.yml* foi usado para provisionar o container com o Kafka.
+
+**Observação:**
+Como, neste ambiente proposto, o container Kafka está em uma máquina virtual, então foi preciso informar o endereço IP atribuído a ela na minha rede local. Esta informação está presente na linha 22 do arquivo *docker-compose-files/docker-compose-kafka.yml*:
+
+~~~
+KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://192.168.0.35:9092
+~~~
 
 #### 4. Aquisição e Ingestão de dados da plataforma IoT no Minio e Kafka
 
