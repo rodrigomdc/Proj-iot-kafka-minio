@@ -20,9 +20,10 @@ class DataBucket:
         #IP address of the Minio Server       
         self._server_addr = server_addr
         #API port of the Minio Service
-        self._server_port = server_port
+        self._server_port = server_port        
         self._logger = logging.getLogger(f"dataingestion.{__name__}")
         self._logger.debug("DataBucket")
+        self._cli_bucket = self._createConnection()
 
     def _createConnection(self):
 
@@ -54,14 +55,13 @@ class DataBucket:
             bucket_name is the destination bucket that storage the json files
             status enables tracking of file sending to the destination bucket
         """
-        
-        cli_bucket = self._createConnection()
+
         try:
             assert os.path.isdir(source_dir)
             obj_name = aux.getLastFileName(source_dir)
             file_name = source_dir + os.listdir(source_dir)[0]
             try:            
-                cli_bucket.fput_object(
+                self._cli_bucket.fput_object(
                 bucket_name, 
                 obj_name,  
                 file_name, 

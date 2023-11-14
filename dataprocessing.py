@@ -14,7 +14,7 @@ def main():
     print("#                                                                   #")
     print("#####################################################################\n")
     
-    #Log
+    #Logs
     log = aux.createLog("dataprocessing", logging.DEBUG)
     
     #Load parameters from yaml file
@@ -26,7 +26,7 @@ def main():
     kafka_cons_topic = config['kafka']['source_topic'] 
     kafka_prod_topic = config['kafka']['transformed_topic']    
   
-    log.info("Starting DataProcessing service.")
+    log.info("Starting Data Processing service.")
     ds = DataStreaming(kafka_addr, kafka_port)
 
     log.info("Create SparkSession.")
@@ -54,15 +54,7 @@ def main():
 
     #Convert binary data to string format
     df_input.selectExpr("CAST(value AS STRING)")
-
-    #NOTE: Está tendo divergencia de dia em relação ao horario
-    #{"Year":2023,"Month":"Nov","Day":9,"Time":"21:01:2","Sensor":"Humidity","Value":80.0}
-    #Era para mostrar day 8 e não day 9.
-    #Testar de noite
-
-    #Change local timezone of the timestamp object
-    #df_input = df_input.withColumn("created_at",from_utc_timestamp("created_at","America/Belem"))
-
+ 
     #Load values in received menssage
     df_values = (
      df_input     

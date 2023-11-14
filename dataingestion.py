@@ -15,8 +15,7 @@ def repeatTask():
 
 def ingestionTask():   
     
-    log.info("Load data from ThingSpeak plataform.")    
-    src_data = DataSensor(src_url)
+    log.info("Collecting data from ThingSpeak platform.")    
     data_sensor = src_data.collectTSData()
     src_data.saveToFile(tmp_dir, data_sensor)   
 
@@ -41,8 +40,7 @@ if __name__ == "__main__":
     #Load parameters from yaml file
     config = aux.loadParams()
     
-    #Kafka parameters
-    
+    #Kafka parameters    
     kafka_addr = config['kafka']['addr']
     kafka_port = config['kafka']['port']    
     kafka_topic = config['kafka']['source_topic'] 
@@ -57,7 +55,8 @@ if __name__ == "__main__":
     tmp_dir = config['raw_dir']
     acquisition_time = config["schedule_time"]
 
-    log.info(f"Starting DataIngestion service.")    
+    log.info(f"Starting Data Ingestion service.")  
+    src_data = DataSensor(src_url)  
     log.info(f"Connecting Kafka service.")
     prod_data = DataProducer(kafka_topic, kafka_addr, kafka_port)
     log.info(f"Connection to Kafka successful.")

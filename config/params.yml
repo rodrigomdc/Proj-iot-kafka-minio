@@ -15,4 +15,4 @@ minio:
 #Others
 url: 'https://thingspeak.com/channels/1052510/feed/last.json'
 raw_dir: 'raw_data/'
-schedule_time: 60
+schedule_time: 120
