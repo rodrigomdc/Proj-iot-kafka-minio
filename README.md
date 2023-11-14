@@ -64,7 +64,7 @@ Ele foi implantado em uma das máquinas virtuais como um container Docker e poss
 
 * Bronze
 
-Um arquivo *docker-compose-files/docker-compose-minio.yml* foi usado para provisionar o container com o Minio.
+Um arquivo **docker-compose-files/docker-compose-minio.yml** foi usado para provisionar o container com o Minio.
 
 #### 3. Implantação do serviço de storage de dados em streaming
 
@@ -77,10 +77,11 @@ Criou-se 2 tópicos no Kafka:
 * **dataSensor:** Tópico usado para publicar no Kafka os dados coletados da plataforma.
 * **dataTransformed:** Tópico usado para públicar no Kafka os dados que foram processados pelo Apache Spark.
 
-Um arquivo *docker-compose-files/docker-compose-kafka.yml* foi usado para provisionar o container com o Kafka.
+Um arquivo **docker-compose-files/docker-compose-kafka.yml** foi usado para provisionar o container com o Kafka.
 
 **Observação:**
-Como, neste ambiente proposto, o container Kafka está em uma máquina virtual, então foi preciso informar o endereço IP atribuído a ela na minha rede local. Esta informação está presente na linha 22 do arquivo *docker-compose-files/docker-compose-kafka.yml*:
+
+Como, neste ambiente proposto, o container Kafka está em uma máquina virtual, então foi preciso informar o endereço IP local atribuído a ela. Esta informação está presente na linha 22 do arquivo *docker-compose-files/docker-compose-kafka.yml*:
 
 ~~~
 KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://192.168.0.35:9092
@@ -107,7 +108,7 @@ Em relação à ingestão dos dados, ela segue as seguintes sequências:
 4. Dados em formato JSON são publicados como mensagens para o tópico dataSensor no Kafka.
 5. As etapas de 1 a 4 se repetem a cada x segundos.
 
-O arquivo *config/params.yml* determina os principais parâmetros necessários para a execução deste script, inclusive o parâmetro **schedule_time** que define o intervalo de repetição deste processo, em segundos. 
+O arquivo **config/params.yml** determina os principais parâmetros necessários para a execução deste script, inclusive o parâmetro **schedule_time** que define o intervalo de repetição deste processo, em segundos. 
 
 A figura abaixo apresenta a execução do script de aquisição e ingestão de dados.
 
@@ -121,13 +122,15 @@ Já a figura abaixo apresenta uma amostra do conteúdo presente no bucket Bronze
     <img src="img/minio_bucket.png" height="200">
 </p>
 
-Por fim, a figura abaixo apresenta os dados já publicados no tópico *dataSensor*.
+Por fim, a figura abaixo apresenta os dados já publicados no tópico **dataSensor**.
 
 <p align="left">
     <img src="img/tp_sensor.png" height="150">
 </p>
 
-**Observação:** Os dados coletados da aplicação no ThingSpeak dependem da disponibilidade  por parte do proprietário que pode tornar indisponível o acesso a aplicação por motivos próprios ou não. 
+**Observação:** 
+
+Os dados coletados da aplicação no ThingSpeak dependem da disponibilidade  por parte do proprietário que pode tornar indisponível o acesso a aplicação por motivos próprios ou não. 
 
 #### 4. Processamento dos dados em streaming
 
@@ -142,7 +145,7 @@ Os dados brutos publicados como mensagens no tópico dataSensor são consumidos 
 * Alteração do mês em formato de número para o formato de caractere.
 * Transformação do formato do dataframe.
 
-Após isto, eles são públicados no Kafka como mensagens no tópico *dataTransformed*. Assim, as aplicações podem usar essas informações para gerar possíveis alertas relacionados a umidade relativa do ar ou alta/baixa temperatura do ambiente.
+Após isto, eles são públicados no Kafka como mensagens no tópico **dataTransformed**. Assim, as aplicações podem usar essas informações para gerar possíveis alertas relacionados a umidade relativa do ar ou alta/baixa temperatura do ambiente.
 
 A figura abaixo apresenta a execução do script de processamento dos dados em streaming.
 
@@ -150,12 +153,15 @@ A figura abaixo apresenta a execução do script de processamento dos dados em s
     <img src="img/dt_str.png" height="270">
 </p>
 
-Já a figura abaixo apresenta os dados já transformados e publicados no tópico *dataTransformed*.
+Já a figura abaixo apresenta os dados já transformados e publicados no tópico **dataTransformed**.
 
 <p align="left">
     <img src="img/tp_transf.png" height="150">
 </p>
 
+**Observação:** 
+
+As credenciais de acesso **minio_lib** presentes no arquivo *config/credentials.py* devem ser criadas dentro do ambiente de gerenciamento do Minio.
 
 ### Conclusão
 
