@@ -1,8 +1,8 @@
-# Ambiente local para ETL de dados de plataforma IoT com processamento em tempo real
+# Pipeline de dados com o uso de dados de uma plataforma IoT
 
 ###  Apresentação
 
-Neste projeto, buscou-se aplicar um processo de ETL básico com processamento em streaming de dados de variáveis meteorológicas coletados de uma plataforma IoT chamada ThingSpeak. 
+Neste projeto, buscou-se elaborar um pipeline de dados básico com processamento em streaming de variáveis meteorológicas coletadas de uma plataforma IoT chamada ThingSpeak. 
 
 ### Diagrama do Projeto
 
