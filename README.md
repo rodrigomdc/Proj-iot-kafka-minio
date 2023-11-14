@@ -1,4 +1,4 @@
-# Pipeline de dados com o uso de dados em tempo real de uma plataforma IoT
+# Pipeline de dados com o processamento de dados IoT em streaming
 
 ###  Apresentação
 
