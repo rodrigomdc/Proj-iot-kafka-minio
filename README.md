@@ -60,11 +60,9 @@ Configuração da máquina hospedeira:
 
 O [MinIO](https://min.io/) foi escolhido como serviço de storage de objetos on-premises. Sua escolha se deu pela simplicidade de uso bem como pela similaridade em nível de programação com o ambiente do AWS S3 o que contribúi também para o processo de estudo de ferramentas e conceitos.
 
-Ele foi implantado em uma das máquinas virtuais como um container Docker e apresenta 3 buckets:
+Ele foi implantado em uma das máquinas virtuais como um container Docker e possui um bucket:
 
 * Bronze
-* Silver
-* Gold
 
 Um arquivo *docker-compose-files/docker-compose<minio>.yml* foi usado para provisionar o container com o Minio.
 
@@ -158,7 +156,7 @@ Este projeto teve como objetivo reforçar diversos conceitos bem como ter contat
 
 * Apache AirFlow
 * Apache Kafka
-* Possibilidade de persistir os dados transformados no bucket Silver
+* Uso de buckets silver e gold
 * Kubernetes
 * Elaboração de dashboards com dados em tempo real
 * ...
