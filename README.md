@@ -18,13 +18,14 @@ Neste projeto, buscou-se aplicar um processo de ETL básico com processamento em
 - Minio RELEASE.2023-10-16T04-13-43Z
 - VirtualBox v7.0
 - Docker v24.0.2
-- jets3t-0.9.4.jar
-- aws-java-sdk-1.12.571.jar
-- aws-java-sdk-bundle-1.12.571.jar
-- kafka-clients-3.5.0.jar
-- spark-sql-kafka-0-10_2.12-3.5.0.jar
-- spark-token-provider-kafka-0-10_2.12-3.5.0.jar
-- commons-pool2-2.12.0.jar
+- Pacotes para o Apache Spark:
+  - jets3t-0.9.4.jar
+  - aws-java-sdk-1.12.571.jar
+  - aws-java-sdk-bundle-1.12.571.jar
+  - kafka-clients-3.5.0.jar
+  - spark-sql-kafka-0-10_2.12-3.5.0.jar
+  - spark-token-provider-kafka-0-10_2.12-3.5.0.jar
+  - commons-pool2-2.12.0.jar
 
 ### Etapas
 
