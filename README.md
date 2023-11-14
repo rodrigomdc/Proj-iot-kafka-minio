@@ -4,11 +4,11 @@
 
 Neste projeto, buscou-se aplicar um processo de ETL básico com processamento em streaming de dados de variáveis meteorológicas coletados de uma plataforma IoT chamada ThingSpeak. 
 
-### Arquitetura do Projeto
+### Diagrama do Projeto
 
-
-
-
+<p align="left">
+    <img src="img/diag_img.png" height="270">
+</p>
 
 ### Tecnologias, linguagens e pacotes utilizados
 
@@ -38,11 +38,11 @@ A construção do projeto proposto ocorreu em 5 etapas:
 
 #### 1. Construção de um ambiente local
 
-Visando o reforço nos conhecimentos de Sistema Operacional Linux, Redes de Computadores e Virtualização, criou-se uma infraestrutura local com o uso de duas máquinas virtuais com o uso do VirtualBox. 
+Visando o reforço nos conhecimentos de Sistema Operacional Linux, Redes de Computadores e Virtualização, criou-se uma infraestrutura local com o uso de duas máquinas virtuais pelo VirtualBox. 
 
-Uma máquina virtual atua como serviço de storage de objetos MinIO e outra como serviço de streaming de dados com o Kafka.
+Uma máquina virtual atua como serviço de storage de objetos com o Minio e outra como serviço de streaming de dados com o Kafka.
 
-Configuração das máquians virtuais:
+Configuração das máquinas virtuais:
 
 * SO: Ubuntu Minimal 18.08 configurado como servidor básico
 * RAM: 2 GB
@@ -69,9 +69,9 @@ Um arquivo *docker-compose-files/docker-compose<minio>.yml* foi usado para provi
 
 #### 3. Implantação do serviço de storage de dados em streaming
 
-O [Kafka](https://kafka.apache.org/) foi a plataforma escolhida para armazenar os dados em tempo real dos dados obtidos da plataforma ThingSpeak. 
+O [Kafka](https://kafka.apache.org/) foi a plataforma escolhida para armazenar os dados em tempo real coletados da plataforma ThingSpeak. 
 
-Assim como o Minio, ele também foi implantado como um container docker em uma máquina virtual. 
+Assim como o Minio, ele também foi implantado como um container Docker em uma máquina virtual. 
 
 Criou-se 2 tópicos no Kafka:
 
@@ -80,19 +80,13 @@ Criou-se 2 tópicos no Kafka:
 
 Um arquivo *docker-compose-files/docker-compose<kafka>.yml* foi usado para provisionar o container com o Kafka.
 
-Cada leitura gera um arquivo JSON que é armazenado no bucket Bronze. A figura abaixo apresenta uma amostra do conteúdo presente neste bucket. 
-
-<p align="left">
-    <img src="img/minio_bucket.png" height="200">
-</p>
-
 #### 4. Aquisição e Ingestão de dados da plataforma IoT no Minio e Kafka
 
 Esta etapa ocorre pela execução do script **dataingestion.py** sendo ele executado localmente na máquina hospedeira das máquinas virtuais. 
 
 Como fonte de dados, escolheu-se dados de natureza em tempo real obtidos de uma aplicação de IoT hospedada na plataforma ThingSpeak. Nela, as aplicações são definidas como canais (Channels) que podem ser privados ou públicos. 
 
-Escolheu-se o [Channel ID: 1052510](https://thingspeak.com/channels/1052510) por representar dados coletados de uma estação meteorológica particular instalada na cidade de Belém-PA. Escolheu-se manipular dados referentes a:
+Escolheu-se o [Channel ID: 1052510](https://thingspeak.com/channels/1052510) por representar dados coletados de uma estação meteorológica particular instalada na cidade de Belém-PA. As variáveis definidas foram:
 
 * Timestamp
 * Umidade relativa do ar (%rH)
@@ -101,13 +95,13 @@ Escolheu-se o [Channel ID: 1052510](https://thingspeak.com/channels/1052510) por
 
 Em relação à ingestão dos dados, ela segue as seguintes sequências:
 
-1. Dado requisitado e recebido em formato JSON.
-2. Geração de arquivo em formato JSON sendo armazenado em um diretório local temporário (*raw_data*)
-3. Arquivo JSON presente no diretório temporário é enviado ao bucket bronze no MinIO.
+1. Dados requisitados e recebidos em formato JSON.
+2. Geração de arquivo em formato JSON sendo armazenado em um diretório local temporário (*raw_data*).
+3. Arquivo JSON presente no diretório temporário é enviado ao bucket Bronze no Minio.
 4. Dados em formato JSON são publicados como mensagens para o tópico dataSensor no Kafka.
 5. As etapas de 1 a 4 se repetem a cada x segundos.
 
-O arquivo *config/params.yml* determina os principais parâmetros necessários para a execução deste script, inclusive o parâmetro **schedule_time** que determina o intervalo de repetição deste processo, em segundos. 
+O arquivo *config/params.yml* determina os principais parâmetros necessários para a execução deste script, inclusive o parâmetro **schedule_time** que define o intervalo de repetição deste processo, em segundos. 
 
 A figura abaixo apresenta a execução do script de aquisição e ingestão de dados.
 
@@ -115,7 +109,13 @@ A figura abaixo apresenta a execução do script de aquisição e ingestão de d
     <img src="img/dt_ing.png" height="270">
 </p>
 
-Já a figura abaixo apresenta os dados já publicados no tópico *dataSensor*.
+Já a figura abaixo apresenta uma amostra do conteúdo presente no bucket Bronze. 
+
+<p align="left">
+    <img src="img/minio_bucket.png" height="200">
+</p>
+
+Por fim, a figura abaixo apresenta os dados já publicados no tópico *dataSensor*.
 
 <p align="left">
     <img src="img/tp_sensor.png" height="150">
@@ -125,7 +125,7 @@ Já a figura abaixo apresenta os dados já publicados no tópico *dataSensor*.
 
 #### 4. Processamento dos dados em streaming
 
-Esta etapa ocorre pela execução do script **dataprocessing.py** sendo ele executado localmente na máquina hospedeira das máquinas virtuais. Além disso, ele é executado em conjunto com o script **dataingestion.py**.
+Esta etapa ocorre pela execução do script **dataprocessing.py** sendo ele executado localmente na máquina hospedeira das máquinas virtuais. Necessitando ser executado em conjunto com o script **dataingestion.py**.
 
 Os dados brutos publicados como mensagens no tópico dataSensor são consumidos neste mésmo tópico pelo Apache Spark e então passam por algumas transformações:
 
@@ -155,10 +155,11 @@ Já a figura abaixo apresenta os dados já transformados e publicados no tópico
 
 Este projeto teve como objetivo reforçar diversos conceitos bem como ter contato com outros principalmente no contexto de "dados". Por ser um cenário local e genérico também permite estudar e aplicar outros conceitos e ferramentas como:
 
-* Apache AirFlow*
+* Apache AirFlow
 * Apache Kafka
-* Possibilidade de persistir os dados transformados no bucket silver
+* Possibilidade de persistir os dados transformados no bucket Silver
 * Kubernetes
+* Elaboração de dashboards com dados em tempo real
 * ...
 
 
