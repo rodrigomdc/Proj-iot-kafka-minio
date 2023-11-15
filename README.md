@@ -41,7 +41,7 @@ A construção do projeto proposto ocorreu em 5 etapas:
 
 Visando o reforço nos conhecimentos de Sistema Operacional Linux, Redes de Computadores e Virtualização, criou-se uma infraestrutura local com o uso de duas máquinas virtuais pelo VirtualBox. 
 
-Uma máquina virtual atua como serviço de storage de objetos com o Minio e outra como serviço de streaming de dados com o Kafka.
+Uma máquina virtual atua como serviço de storage de objetos com o Minio e outra como serviço de armazenando de dados em streaming com o Kafka.
 
 Configuração das máquinas virtuais:
 
