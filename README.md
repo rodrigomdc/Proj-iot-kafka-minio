@@ -168,7 +168,7 @@ As credenciais de acesso armazenadas na variável **minio_lib** presente no arqu
 Este projeto teve como objetivo reforçar diversos conceitos bem como ter contato com outros principalmente no contexto de "dados". Por ser um cenário local e genérico também permite estudar e aplicar outros conceitos e ferramentas como:
 
 * Apache AirFlow
-* Apache Kafka
+* Otimizações no Apache Kafka e Spark
 * Uso de buckets silver e gold
 * Kubernetes
 * Elaboração de dashboards com dados em tempo real
