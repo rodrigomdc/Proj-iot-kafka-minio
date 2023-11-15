@@ -64,7 +64,7 @@ Ele foi implantado em uma das máquinas virtuais como um container Docker e poss
 
 * Bronze
 
-Um arquivo **docker-compose-files/docker-compose-minio.yml** foi usado para provisionar o container com o Minio.
+Um arquivo **docker-compose-files/docker-compose-minio.yml** foi usado para criar um container contendo o Minio.
 
 #### 3. Implantação do serviço de storage de dados em streaming
 
@@ -161,7 +161,7 @@ Já a figura abaixo apresenta os dados já transformados e publicados no tópico
 
 **Observação:** 
 
-As credenciais de acesso **minio_lib** presentes no arquivo *config/credentials.py* devem ser criadas dentro do ambiente de gerenciamento do Minio.
+As credenciais de acesso armazenadas na variável **minio_lib** presente no arquivo *config/credentials.py* devem ser criadas através do ambiente de gerenciamento do Minio.
 
 ### Conclusão
 
