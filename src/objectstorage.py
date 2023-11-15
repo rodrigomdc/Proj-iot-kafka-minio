@@ -47,13 +47,12 @@ class DataBucket:
     def sendToBucket(self, source_dir, bucket_name):    
 
         """
-        This function is responsible for sending json file to specific bucket in Minio server
+        This function is responsible for sending JSON file to specific bucket in Minio server
 
         Parameters
         ----------
             source_dir is the path to the local temporary directory that stores the JSON file
-            bucket_name is the destination bucket that storage the json files
-            status enables tracking of file sending to the destination bucket
+            bucket_name is the destination bucket that storage the json files            
         """
 
         try:

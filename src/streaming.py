@@ -67,7 +67,7 @@ class DataStreaming:
                 .load()
             )            
         except (PySparkException, TypeError) as e:
-            self._logger.exception(f"Exception in sparkConsumer()")      
+            self._logger.exception(f"Exception in streamingConsumer()")      
             sys.exit(1) 
         else:
             self._logger.debug(f"Data loaded into a streaming DataFrame.")
@@ -99,7 +99,7 @@ class DataStreaming:
                 .start()        
             )            
         except (PySparkException, TypeError) as e:
-            self._logger.exception(f"Exception in sparkProducer()")  
+            self._logger.exception(f"Exception in streamingProducer()")  
             sys.exit(1)    
             
         else:
@@ -129,7 +129,7 @@ class DataStreaming:
                 .start()        
             )            
         except (PySparkException, TypeError) as e:
-            self._logger.exception(f"Exception in sparkProducer()") 
+            self._logger.exception(f"Exception in streamingProducerDebug()") 
             sys.exit(1)    
             
         else:
