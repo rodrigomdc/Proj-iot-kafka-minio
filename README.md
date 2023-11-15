@@ -1,4 +1,4 @@
-# Pipeline de dados com o processamento de dados em streaming de uma fonte de IoT
+# Pipeline de dados com o processamento de dados em streaming de uma plataforma IoT
 
 ###  Apresentação
 
