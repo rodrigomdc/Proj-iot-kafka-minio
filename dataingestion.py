@@ -1,6 +1,6 @@
 
-from src.loadsource import DataSensor
-from src.kafkalib import DataProducer
+from sensorsource import DataSensor
+from publisher import DataProducer
 from src.objectstorage import DataBucket
 import src.auxiliary as aux
 import logging

@@ -1,7 +1,7 @@
 
 from pyspark.sql.types import StructField, StructType, StringType, LongType
 from pyspark.sql.functions import *
-from src.streaminglib import *
+from streaming import *
 import src.auxiliary as aux
 import logging
 
