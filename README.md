@@ -89,7 +89,7 @@ KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://192.168.0.3
 
 #### 4. Aquisição e Ingestão de dados da plataforma IoT no Minio e Kafka
 
-Esta etapa ocorre pela execução do script **dataingestion.py** sendo ele executado localmente na máquina hospedeira das máquinas virtuais. 
+Esta etapa ocorre pela execução do arquivo **dataingestion.py** sendo ele executado localmente na máquina hospedeira das máquinas virtuais. 
 
 Como fonte de dados, escolheu-se dados de natureza em tempo real obtidos de uma aplicação de IoT hospedada na plataforma ThingSpeak. Nela, as aplicações são definidas como canais (Channels) que podem ser privados ou públicos. 
 
@@ -134,7 +134,7 @@ Os dados coletados da aplicação no ThingSpeak dependem da disponibilidade  por
 
 #### 4. Processamento dos dados em streaming
 
-Esta etapa ocorre pela execução do script **dataprocessing.py** sendo ele executado localmente na máquina hospedeira das máquinas virtuais. Necessitando ser executado em conjunto com o script **dataingestion.py**.
+Esta etapa ocorre pela execução do arquivo **dataprocessing.py** sendo ele executado localmente na máquina hospedeira das máquinas virtuais. Necessitando ser executado em conjunto com o script **dataingestion.py**.
 
 Os dados brutos publicados como mensagens no tópico dataSensor são consumidos neste mésmo tópico pelo Apache Spark e então passam por algumas transformações:
 
