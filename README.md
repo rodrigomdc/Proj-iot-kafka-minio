@@ -77,7 +77,7 @@ Criou-se 2 tópicos no Kafka:
 * **dataSensor:** Tópico usado para publicar no Kafka os dados coletados da plataforma.
 * **dataTransformed:** Tópico usado para públicar no Kafka os dados que foram processados pelo Apache Spark.
 
-Um arquivo **docker-compose-files/docker-compose-kafka.yml** foi usado para provisionar o container com o Kafka.
+Um arquivo **docker-compose-files/docker-compose-kafka.yml** foi usado para criar um container contendo o Kafka.
 
 **Observação:**
 
